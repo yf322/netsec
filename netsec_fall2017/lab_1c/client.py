@@ -10,27 +10,31 @@ from playground.network.packet import PacketType
 
 class ClientProtocol(Protocol):
 
-    def __init__(self):
+    def __init__(self, loop):
         self.transport = None
+        self.loop = loop
 
     def connection_made(self, transport):
         self.transport = transport
         self._deserializer = PacketType.Deserializer()
         loginSession = LogInWithUsername()
         loginSession.username = self.getUsernameInput()
+        print(loginSession.username)
         loginSession.password = self.getPasswordInput()
+        print(loginSession.username + "  " + loginSession.password)
         self.transport.write(loginSession.__serialize__())
         print("User Logging in with username: {}".format(loginSession.username))
 
     def data_received(self, data):
+        self._deserializer = PacketType.Deserializer()
         self._deserializer.update(data)
-        for pkt in self._deserializer.netPackets():
+        for pkt in self._deserializer.nextPackets():
             if isinstance(pkt, LogInStatus):
                 getUserProfile = GetUserProfleWithID()
                 if pkt.status:
+                    print("User request profile with ID: {}".format(pkt.userID))
                     getUserProfile.userID = pkt.userID
                     self.transport.write(getUserProfile.__serialize__())
-                    print("User request profile with ID: {}".format(pkt.profile))
                 else:
                     print("TODO Error message")
 

@@ -8,7 +8,7 @@ import asyncio
 
 def basicUnitTest():
     loop = asyncio.set_event_loop(TestLoopEx())
-    client = ClientProtocol()
+    client = ClientProtocol(loop)
     server = ServerProtocol()
     transportToServer = MockTransportToProtocol(server)
     transportToClient = MockTransportToProtocol(client)

@@ -18,23 +18,24 @@ class ServerProtocol(Protocol):
         self._deserializer = PacketType.Deserializer()
 
     def data_received(self, data):
+        self._deserializer = PacketType.Deserializer()
         self._deserializer.update(data)
-        for pkt in self._deserializer.netPackets():
-            for pkt in self._deserializer.netPackets():
-                if isinstance(pkt, LogInWithUsername):
-                    loginStatus = LogInStatus()
-                    if pkt.status != None:
-                        loginStatus.status = True
-                        loginStatus.userID = self.getUserIDWithName(pkt.username)
-                    else:
-                        loginStatus.status = False
-                        loginStatus.userID = None
-                    self.transport.write(loginStatus.__serialize__())
+        for pkt in self._deserializer.nextPackets():
+            if isinstance(pkt, LogInWithUsername):
+                loginStatus = LogInStatus()
+                print(pkt.password)
+                if pkt.username != None or pkt.password != None:
+                    loginStatus.status = True
+                    loginStatus.userID = self.getUserIDWithName(pkt.username)
+                else:
+                    loginStatus.status = False
+                    loginStatus.userID = None
+                self.transport.write(loginStatus.__serialize__())
 
-                elif isinstance(pkt, GetUserProfleWithID):
-                    sendUserProfile = SendUserProfile()
-                    sendUserProfile.profile = self.getUserProfileWithID(pkt.userID)
-                    self.transport.write(sendUserProfile.__serialize__())
+            elif isinstance(pkt, GetUserProfleWithID):
+                sendUserProfile = SendUserProfile()
+                sendUserProfile.profile = self.getUserProfileWithID("1")
+                self.transport.write(sendUserProfile.__serialize__())
 
 
     def connection_lost(self, exc):
