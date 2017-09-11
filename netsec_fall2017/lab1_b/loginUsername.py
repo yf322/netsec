@@ -5,7 +5,7 @@ class LogInWithUsername(PacketType):
     DEFINITION_IDENTIFIER = "lab2b.yongqiang.LogInWithUsername"
     DEFINITION_VERSION = "1.0"	
     
-    FILEDS = [
+    FIELDS = [
         ("username", STRING), 
         ("password", STRING)
     ]

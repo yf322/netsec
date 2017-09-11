@@ -5,7 +5,7 @@ class LogInStatus(PacketType):
     DEFINITION_IDENTIFIER = "lab2b.yongqiang.LogInStatus"
     DEFINITION_VERSION = "1.0"	
     
-    FILEDS = [
+    FIELDS = [
         ("status", BOOL), 
         ("userID", STRING)
     ]

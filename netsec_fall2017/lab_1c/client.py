@@ -19,14 +19,12 @@ class ClientProtocol(Protocol):
         self._deserializer = PacketType.Deserializer()
         loginSession = LogInWithUsername()
         loginSession.username = self.getUsernameInput()
-        print(loginSession.username)
         loginSession.password = self.getPasswordInput()
-        print(loginSession.username + "  " + loginSession.password)
-        self.transport.write(loginSession.__serialize__())
         print("User Logging in with username: {}".format(loginSession.username))
+        self.transport.write(loginSession.__serialize__())
+
 
     def data_received(self, data):
-        self._deserializer = PacketType.Deserializer()
         self._deserializer.update(data)
         for pkt in self._deserializer.nextPackets():
             if isinstance(pkt, LogInStatus):

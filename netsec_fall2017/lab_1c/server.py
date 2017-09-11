@@ -18,7 +18,6 @@ class ServerProtocol(Protocol):
         self._deserializer = PacketType.Deserializer()
 
     def data_received(self, data):
-        self._deserializer = PacketType.Deserializer()
         self._deserializer.update(data)
         for pkt in self._deserializer.nextPackets():
             if isinstance(pkt, LogInWithUsername):

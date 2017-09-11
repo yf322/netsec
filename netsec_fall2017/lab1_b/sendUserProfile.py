@@ -6,6 +6,6 @@ class SendUserProfile(PacketType):
     DEFINITION_IDENTIFIER = "lab2b.yongqiang.SendUserProfile"
     DEFINITION_VERSION = "1.0"
 
-    FILEDS = [
+    FIELDS = [
         ("profile", STRING)
     ]
