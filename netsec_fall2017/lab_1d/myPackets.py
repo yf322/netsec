@@ -3,7 +3,7 @@ from playground.network.packet.fieldtypes import BOOL, STRING
 
 
 class LogInWithUsername(PacketType):
-    DEFINITION_IDENTIFIER = "lab1c.yongqiang.LogInWithUsername"
+    DEFINITION_IDENTIFIER = "lab1d.yongqiang.LogInWithUsername"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -13,7 +13,7 @@ class LogInWithUsername(PacketType):
 
 
 class LogInStatus(PacketType):
-    DEFINITION_IDENTIFIER = "lab1c.yongqiang.LogInStatus"
+    DEFINITION_IDENTIFIER = "lab1d.yongqiang.LogInStatus"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -23,7 +23,7 @@ class LogInStatus(PacketType):
 
 
 class GetUserProfleWithID(PacketType):
-    DEFINITION_IDENTIFIER = "lab1c.yongqiang.GetUserProfleWithID"
+    DEFINITION_IDENTIFIER = "lab1d.yongqiang.GetUserProfleWithID"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
@@ -31,7 +31,7 @@ class GetUserProfleWithID(PacketType):
     ]
 
 class SendUserProfile(PacketType):
-    DEFINITION_IDENTIFIER = "lab1c.yongqiang.SendUserProfile"
+    DEFINITION_IDENTIFIER = "lab1d.yongqiang.SendUserProfile"
     DEFINITION_VERSION = "1.0"
 
     FIELDS = [
