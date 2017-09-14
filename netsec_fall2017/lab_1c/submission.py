@@ -1,5 +1,4 @@
-from netsec_fall2017.lab1_b.loginUsername import LogInWithUsername
-from netsec_fall2017.lab1_b.getUserProfile import GetUserProfleWithID
+from myPackets import *
 from client import ClientProtocol
 from server import ServerProtocol
 from playground.asyncio_lib.testing import TestLoopEx
@@ -11,14 +10,19 @@ def basicUnitTest():
     loop = asyncio.set_event_loop(TestLoopEx())
     client = ClientProtocol(loop)
     server = ServerProtocol()
-    transportToServer = MockTransportToProtocol(server)
-    transportToClient = MockTransportToProtocol(client)
+    transportToServer = MockTransportToProtocol(myProtocol=client)
+    transportToClient = MockTransportToProtocol(myProtocol=server)
+    transportToServer.setRemoteTransport(transportToClient)
+    transportToClient.setRemoteTransport(transportToServer)
     server.connection_made(transportToClient)
     client.connection_made(transportToServer)
 
     loginWithUsername = LogInWithUsername()
     getUserProfile = GetUserProfleWithID()
     client.loginStart(loginWithUsername, getUserProfile)
+
+    assert client.state == 1
+    assert server.state == 1
 
 if __name__ == "__main__":
     basicUnitTest()

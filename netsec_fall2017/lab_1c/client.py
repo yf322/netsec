@@ -1,10 +1,4 @@
-import sys
-import os.path
-sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
-from netsec_fall2017.lab1_b.loginUsername import LogInWithUsername
-from netsec_fall2017.lab1_b.loginStatus import LogInStatus
-from netsec_fall2017.lab1_b.getUserProfile import GetUserProfleWithID
-from netsec_fall2017.lab1_b.sendUserProfile import SendUserProfile
+from myPackets import  *
 from asyncio.protocols import Protocol
 from playground.network.packet import PacketType
 
@@ -18,9 +12,10 @@ class ClientProtocol(Protocol):
     def connection_made(self, transport):
         print("Connected to the server")
         self.transport = transport
+        self._deserializer = PacketType.Deserializer()
 
     def data_received(self, data):
-        self._deserializer = PacketType.Deserializer()
+
         self._deserializer.update(data)
         for pkt in self._deserializer.nextPackets():
             print(pkt)
@@ -38,9 +33,9 @@ class ClientProtocol(Protocol):
                 print("The user profile is:\n {}".format(pkt.profile))
 
             else:
-                self.transport = None
+                self.transport.close()
                 print("Error packet from server")
-                sys.exit(1)
+                #sys.exit(1)
 
     def connection_lost(self, exc):
         self.transport = None
