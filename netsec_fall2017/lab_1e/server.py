@@ -69,8 +69,7 @@ if __name__ == "__main__":
     logging.getLogger().setLevel(logging.NOTSET)
     logging.getLogger().addHandler(logging.StreamHandler())
 
-    coro = playground.getConnector("passThrough").create_playground_server(lambda: ClientProtocol(), '20174.1.1.1',
-                                                                              8080)
+    coro = playground.getConnector("passThrough").create_playground_server(lambda: ServerProtocol(), 8080)
     loop.run_until_complete(coro)
     loop.run_forever()
     loop.close()
